@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --config webpack.build.config.js",
     "game": "webpack --config webpack.game.config.js",
-    "dev": "webpack --config webpack.game.config.js"
+    "dev": "webpack --config webpack.game.config.js",
+    "start": "webpack --config webpack.game.config.js"
   },
   "repository": {
     "type": "git",

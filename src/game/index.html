@@ -1,21 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Merged input demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta http-equiv="cleartype" content="on">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Demon Input</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <meta http-equiv="cleartype" content="on" />
     <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+      }
+       #container {
+        max-width: 1280px;
+        margin: auto;
+      }
+
+      #monitor {
+        background: radial-gradient(circle, rgba(0,0,0,1) 76%, rgba(2,0,36,1) 89%, rgba(113,113,113,1) 100%);
+        position: relative;
+        border-top: 3px solid rgb(71, 71, 71);
+        margin: 5%;
+        padding: 2% 2% 4% 2%;
+        border-radius: 10px;
+        border-bottom-left-radius: 50% 5%;
+        border-bottom-right-radius: 50% 5%;
+        transition: margin-right 1s;
+      }
+
+      #monitor:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 3%;
+        left: 36%;
+        height: 0.9%;
+        width: 28%;
+        background: linear-gradient(0deg, rgb(133, 116, 116) 54%, rgb(65, 38, 0) 100%);
+        border-radius: 100%;
+        box-shadow: 0 0 3px 0 white;
+      }
+
+      canvas {
+        position: relative;
+        background-color: #777;
+        background-size: cover;
+        background-position: top center;
+        width: 100%;
+        /* padding-bottom: 56.25%; */
+        position: relative;
+        overflow: hidden; 
+        height: 100%;
+      }
+
+      @media all and (min-width: 960px) {
+        #monitor {
+          -webkit-animation: tvflicker 0.2s infinite alternate;
+          -moz-animation: tvflicker 0.5s infinite alternate;
+          -o-animation: tvflicker 0.5s infinite alternate;
+          animation: tvflicker 0.5s infinite alternate;
         }
+        @-webkit-keyframes tvflicker {
+          0% {
+            box-shadow: 0 0 100px 0 rgba(200, 235, 255, 0.4);
+          }
+          100% {
+            box-shadow: 0 0 95px 0 rgba(200, 230, 255, 0.45);
+          }
+        }
+        @-moz-keyframes tvflicker {
+          0% {
+            box-shadow: 0 0 100px 0 rgba(225, 235, 255, 0.4);
+          }
+          100% {
+            box-shadow: 0 0 60px 0 rgba(200, 220, 255, 0.6);
+          }
+        }
+        @-o-keyframes tvflicker {
+          0% {
+            box-shadow: 0 0 100px 0 rgba(225, 235, 255, 0.4);
+          }
+          100% {
+            box-shadow: 0 0 60px 0 rgba(200, 220, 255, 0.6);
+          }
+        }
+        @keyframes tvflicker {
+          0% {
+            box-shadow: 0 0 100px 0 rgba(225, 235, 255, 0.4);
+          }
+          100% {
+            box-shadow: 0 0 60px 0 rgba(200, 220, 255, 0.6);
+          }
+        }
+      } 
+
     </style>
-</head>
+  </head>
 
-<body>
-</body>
-
+  <body>
+    <div id="container">
+      <div id="monitor"></div>
+    </div>
+  </body>
 </html>

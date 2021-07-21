@@ -461,12 +461,14 @@ export default class MergedInput extends Phaser.Plugins.ScenePlugin {
 				this.addPlayer();
 			}
 
+			const deadzoneRadius = 0.1;
+
 			// Directions
-			if (thisGamepad.leftStick.y < -0.5) {
+			if (thisGamepad.leftStick.y < -deadzoneRadius) {
 				this.players[thisGamepad.index].direction.UP = Math.abs(thisGamepad.leftStick.y)
 				this.players[thisGamepad.index].direction.TIMESTAMP = this.scene.sys.time.now;
 			}
-			else if (thisGamepad.leftStick.y > 0.5) {
+			else if (thisGamepad.leftStick.y > deadzoneRadius) {
 				this.players[thisGamepad.index].direction.DOWN = thisGamepad.leftStick.y
 				this.players[thisGamepad.index].direction.TIMESTAMP = this.scene.sys.time.now;
 			}
@@ -476,11 +478,11 @@ export default class MergedInput extends Phaser.Plugins.ScenePlugin {
 				this.players[thisGamepad.index].direction.DOWN = thisGamepad.down ? 1 : 0;
 			}
 
-			if (thisGamepad.leftStick.x < -0.5) {
+			if (thisGamepad.leftStick.x < -deadzoneRadius) {
 				this.players[thisGamepad.index].direction.LEFT = Math.abs(thisGamepad.leftStick.x)
 				this.players[thisGamepad.index].direction.TIMESTAMP = this.scene.sys.time.now;
 			}
-			else if (thisGamepad.leftStick.x > 0.5) {
+			else if (thisGamepad.leftStick.x > deadzoneRadius) {
 				this.players[thisGamepad.index].direction.RIGHT = thisGamepad.leftStick.x
 				this.players[thisGamepad.index].direction.TIMESTAMP = this.scene.sys.time.now;
 			}
@@ -491,11 +493,11 @@ export default class MergedInput extends Phaser.Plugins.ScenePlugin {
 			}
 
 			// Secondary
-			if (thisGamepad.rightStick.y < -0.5) {
+			if (thisGamepad.rightStick.y < -deadzoneRadius) {
 				this.players[thisGamepad.index].direction_secondary.UP = Math.abs(thisGamepad.rightStick.y)
 				this.players[thisGamepad.index].direction_secondary.TIMESTAMP = this.scene.sys.time.now;
 			}
-			else if (thisGamepad.rightStick.y > 0.5) {
+			else if (thisGamepad.rightStick.y > deadzoneRadius) {
 				this.players[thisGamepad.index].direction_secondary.DOWN = thisGamepad.rightStick.y
 				this.players[thisGamepad.index].direction_secondary.TIMESTAMP = this.scene.sys.time.now;
 			}
@@ -504,11 +506,11 @@ export default class MergedInput extends Phaser.Plugins.ScenePlugin {
 				this.players[thisGamepad.index].direction_secondary.DOWN = 0;
 			}
 
-			if (thisGamepad.rightStick.x < -0.5) {
+			if (thisGamepad.rightStick.x < -deadzoneRadius) {
 				this.players[thisGamepad.index].direction_secondary.LEFT = Math.abs(thisGamepad.rightStick.x)
 				this.players[thisGamepad.index].direction_secondary.TIMESTAMP = this.scene.sys.time.now;
 			}
-			else if (thisGamepad.rightStick.x > 0.5) {
+			else if (thisGamepad.rightStick.x > deadzoneRadius) {
 				this.players[thisGamepad.index].direction_secondary.RIGHT = thisGamepad.rightStick.x
 				this.players[thisGamepad.index].direction_secondary.TIMESTAMP = this.scene.sys.time.now;
 			}
