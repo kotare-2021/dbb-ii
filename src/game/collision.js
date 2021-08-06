@@ -1,6 +1,3 @@
-import Phaser from 'phaser'
-import Arena from './arena'
-import scores from './arena'
 import { player1Win, player2Win } from './winFunc'
 
 function collision(player1, player2) {

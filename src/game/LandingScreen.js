@@ -1,4 +1,5 @@
 import MergedInput from '../main.js'
+// eslint-disable-next-line no-undef
 export default class LandingScreen extends Phaser.Scene {
 
   
@@ -31,31 +32,32 @@ export default class LandingScreen extends Phaser.Scene {
     this.load.image('sun', './assets/sun_screenshot.PNG')
     this.load.image('dragon', './assets/dragon_screenshot.PNG')
     this.load.image('eye', './assets/eye_screenshot.PNG')
+    this.load.image('close', './assets/pixel-x.png')
     this.loadFont('Ruslan', './assets/RuslanDisplay-Regular.ttf')
   }
   
   create()
   {
-    let map1Spawns = [[100, 100], [1000, 100], [650, 200], [300, 400], [1000, 400]]
-    const bg = this.add.image(640, 360, 'bg').setScale(0.8)
+    this.add.image(640, 360, 'bg').setScale(0.8)
     const sunShot = this.add.image(310, 565, 'sun').setInteractive().setScale(0.3)
     const dragonShot = this.add.image(645, 565, 'dragon').setInteractive().setScale(0.3)
     const eyeShot = this.add.image(970, 565, 'eye').setInteractive().setScale(0.3)
-    sunShot.once('pointerup', this.startSunMap, this)
-    dragonShot.once('pointerup', this.startDragonMap, this)
-    eyeShot.once('pointerup', this.startEyeMap, this)
-    const pickAMap = this.add.text(390, 400, 'Click a map to play!', {
+    this.add.text(390, 400, 'Click a map to play!', {
         fontFamily: 'Ruslan', 
         fontSize: 40
     }).setShadow(2, 2, "#333333", 2, false, true);
+    sunShot.once('pointerup', this.startSunMap, this)
+    dragonShot.once('pointerup', this.startDragonMap, this)
+    eyeShot.once('pointerup', this.startEyeMap, this)
   }
   startEyeMap()
   {
     let playerNumber = this.mergedInput.players.length
-    this.scene.start('Arena', { mapData: 'eye_background.json',
-     tileData: "gridtiles.png",
+    this.scene.start('Arena', { 
+      mapData: 'eye_background.json',
+      tileData: "gridtiles.png",
       backgroundData:  "eye_background.png",
-       numberOfPlayers: playerNumber,
+       numberOfPlayers: (playerNumber === 0) ? 2 : playerNumber,
         spawns:  this.eyeSpawns
     })
   }
@@ -63,40 +65,39 @@ export default class LandingScreen extends Phaser.Scene {
   {
     let playerNumber = this.mergedInput.players.length
     this.scene.start('Arena', 
-    { 
-      mapData: 'dragon_background.json', 
-      tileData: "gridtiles.png", 
-      backgroundData:  
-      "dragon_background.png",
-      numberOfPlayers: playerNumber, 
-      spawns:  this.dragonSpawns
-    })
+      { 
+        mapData: 'dragon_background.json', 
+        tileData: "gridtiles.png", 
+        backgroundData: "dragon_background.png",
+        numberOfPlayers: (playerNumber === 0) ? 2 : playerNumber, 
+        spawns:  this.dragonSpawns
+      })
   }
   startSunMap()
   {
     let playerNumber = this.mergedInput.players.length
-          this.scene.start('Arena', 
-            { 
-              mapData: 'sun_map.json', 
-              tileData: "gridtiles.png", 
-              backgroundData:  "sun_background.png", 
-              numberOfPlayers: playerNumber, 
-              spawns: this.sunSpawns
-            })
+    this.scene.start('Arena', 
+      { 
+        mapData: 'sun_map.json', 
+        tileData: "gridtiles.png", 
+        backgroundData: "sun_background.png", 
+        numberOfPlayers: (playerNumber === 0) ? 2 : playerNumber, 
+        spawns: this.sunSpawns
+      })
     }
-    update()    
-    {
-        this.mergedInput.players.forEach((player, i) => {
-            this.add.text(200 * i + 200, 150, `Player ${i + 1} joined!`, { fontFamily: 'Ruslan', fontSize: 20, color: '#00ff00' })
-            .setShadow(2, 2, "#333333", 2, false, true);
-        })
-    }
-    loadFont(name, url) {
-        var newFont = new FontFace(name, `url(${url})`);
-        newFont.load().then(function (loaded) {
-            document.fonts.add(loaded);
-        }).catch(function (error) {
-            return error;
-        });
-      }
+  update()    
+  {
+    this.mergedInput.players.forEach((player, i) => { 
+        this.add.text(200 * i + 200, 150, `Player ${i + 1} joined!`, { fontFamily: 'Ruslan', fontSize: 20, color: '#00ff00' })
+        .setShadow(2, 2, "#333333", 2, false, true);
+    })
+  }
+  loadFont(name, url) {
+    var newFont = new FontFace(name, `url(${url})`);
+    newFont.load().then(function (loaded) {
+        document.fonts.add(loaded);
+    }).catch(function (error) {
+        return error;
+    });
+  }
 } 

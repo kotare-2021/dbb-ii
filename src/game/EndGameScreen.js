@@ -1,5 +1,6 @@
 import MergedInput from '../main.js'
 
+// eslint-disable-next-line no-undef
 export default class EndGameScreen extends Phaser.Scene {
   constructor()
   {
@@ -19,7 +20,7 @@ export default class EndGameScreen extends Phaser.Scene {
   }
   create()
   {
-    var bg = this.add.image(640, 360, 'ebg')
+    this.add.image(640, 360, 'ebg')
     var home = this.add.image(600, 650, 'home').setInteractive().setScale(0.6)
     home.once('pointerup', this.sendHome, this)
     this.scores.forEach((x, i) => {

@@ -5,10 +5,6 @@ const BALL_SPEED = 500;
 const PLAYER_DRAG_X = 700;
 const ARENA_WIDTH = 1280; // this should not be hard coded here!
 const ARENA_HEIGHT = 720; // neither should this!
-
-// milliseconds between dash use
-const DASH_COOLDOWN = 5000;
-
 const HOP_SPEED = 1e3;
 const DASH_SPEED = 800;
 
@@ -27,8 +23,10 @@ export const Stances = Object.freeze({
   IDLE: "IDLE",
 });
 
+// eslint-disable-next-line no-undef
 export default class Fighter extends Phaser.GameObjects.Sprite {
-  constructor(arena, x, y, controlScheme = ControlScheme) {
+  // eslint-disable-next-line no-unused-vars
+  constructor(arena, x, y, _controlScheme = ControlScheme) {
     // do what a sprite does with a scene,
     // except here we called it 'arena' instead.
     super(arena, x, y);
@@ -63,7 +61,6 @@ export default class Fighter extends Phaser.GameObjects.Sprite {
     // Get movement direction from left stick
     let dx = Number(RIGHT) - Number(LEFT);
     let dy = Number(DOWN) - Number(UP);
-    let angle = Math.atan2(dy, dx);
 
     // Handle button presses
     let { HOP, BALL, BLOCK, DASH } = this.controlScheme;

@@ -11,6 +11,7 @@ const Stances = {
 }
 
 export const pointlights = []
+// eslint-disable-next-line no-undef
 export default class Arena extends Phaser.Scene {
 
   constructor()
@@ -32,10 +33,6 @@ export default class Arena extends Phaser.Scene {
 
     this.load.scenePlugin("mergedInput", MergedInput);
     this.load.multiatlas("gamepad", "assets/gamepad.json", "assets");
-    this.load.image(Stances.IDLE, "assets/Player.png");
-    this.load.image(Stances.BLOCK, "assets/Block.png");
-    this.load.image(Stances.DASH, "assets/Dash.png");
-    this.load.image(Stances.BALL, "assets/Ball.png");
     this.load.image("spark", "assets/blue.png");
     this.loadFont('Ruslan', './assets/RuslanDisplay-Regular.ttf')
 
@@ -160,11 +157,8 @@ export default class Arena extends Phaser.Scene {
     this.trails = []
     this.playerColors = [[255, 0, 0], [0, 255, 0], [0, 0, 255], [255, 255, 0]]
     
-    // let sunMap = [[115, 100], [495, 50], [293, 250], [602, 300], [470, 600], [90, 600], [800, 600], [1200, 600], [1100, 250]]
-
-
     let randomSpawn = [];
-    // let playerGroup = this.add.group();
+ 
     
     // Creates new array of random spawns based on amount of players in the game
     for (var i = 0; i < this.players.length; i++) {
@@ -183,7 +177,7 @@ export default class Arena extends Phaser.Scene {
       player.fighter.score = 0
       player.index = i
       playerGroup.add(player.fighter)
-      player.fighter.setTexture(Stances.IDLE)
+      player.fighter.setTexture('right')
 
       // create trail for players
       player.fighter.trail = this.add.particles('spark').createEmitter({
@@ -217,26 +211,15 @@ export default class Arena extends Phaser.Scene {
       .defineKey(1, "LEFT", "LEFT")
       .defineKey(1, "RIGHT", "RIGHT")
 
-      .defineKey(0, "B0", "ONE")
-      .defineKey(0, "B1", "TWO")
-      .defineKey(0, "B2", "THREE")
-      .defineKey(0, "B3", "FOUR")
-      .defineKey(0, "B4", "FIVE")
-      .defineKey(0, "B5", "SIX")
-      .defineKey(0, "B6", "SEVEN")
-      .defineKey(0, "B7", "EIGHT")
-      .defineKey(0, "B8", "NINE")
-      .defineKey(0, "B9", "ZERO")
+      .defineKey(0, "B0", "X")//Flap
+      .defineKey(0, "B2", "C")//Ball
+      .defineKey(0, "B4", "V")//Block
+      .defineKey(0, "B5", "B")//Dash
 
-      .defineKey(1, "B0", "NUMPAD_ONE")
-      .defineKey(1, "B1", "NUMPAD_TWO")
-      .defineKey(1, "B2", "NUMPAD_THREE")
-      .defineKey(1, "B3", "NUMPAD_FOUR")
-      .defineKey(1, "B4", "NUMPAD_FIVE")
-      .defineKey(1, "B5", "NUMPAD_SIX")
-      .defineKey(1, "B6", "NUMPAD_SEVEN")
-      .defineKey(1, "B7", "NUMPAD_EIGHT")
-      .defineKey(1, "B8", "NUMPAD_NINE")
+      .defineKey(1, "B0", "U")//Flap
+      .defineKey(1, "B2", "I")//Ball
+      .defineKey(1, "B4", "O")//Block
+      .defineKey(1, "B5", "P")//Dash
 
       function rockPaperScissors(fighter, opponent) {
         const { BALL, BLOCK, DASH, IDLE } = Stances;
@@ -247,30 +230,35 @@ export default class Arena extends Phaser.Scene {
             } else if (opponent.state == DASH) {
               return handleWin(opponent, fighter, "lazer");
             }
+            break;
           case BLOCK:
             if (opponent.state == IDLE || opponent.state == DASH) {
               return handleWin(fighter, opponent, "stop");
             } else if (opponent.state == BALL) {
               return handleWin(opponent, fighter, "battery");
             }
+            break;
           case DASH:
             if (opponent.state == IDLE || opponent.state == BALL) {
               return handleWin(fighter, opponent, "lazer");
             } else if (opponent.state == BLOCK) {
               return handleWin(opponent, fighter, "stop");
             }
+            break;
           case IDLE:
             if (!["JUMPED", IDLE].includes(opponent.state)) {
               return handleWin(opponent, fighter, "stop");
             }
+            break;
           default:
             return [null, null];
           }
 
       function handleWin(winner, loser) {
-        // console.log(winner.score)
         loser.setPosition(loser.spawn.x, loser.spawn.y);
         loser.body.enable = false;
+        loser.body.velocity.x = 0;
+        loser.body.velocity.y = 0;
         loser.setActive(false).setVisible(false);
         winner.score += 1
         setTimeout(() => {
@@ -313,14 +301,14 @@ export default class Arena extends Phaser.Scene {
 
       // Used for distinguishing different controller texts
       // while debugging
-      function randomColor() {
-        let [r, g, b] = Array.from(new Array(3)).map(randomByte)
-        return `rgb(${r}, ${g}, ${b})`
-        // *** helper ***
-        function randomByte() {
-          return Math.floor(Math.random() * 256)
-        }
-      }
+      // function randomColor() {
+      //   let [r, g, b] = Array.from(new Array(3)).map(randomByte)
+      //   return `rgb(${r}, ${g}, ${b})`
+      //   // *** helper ***
+      //   function randomByte() {
+      //     return Math.floor(Math.random() * 256)
+      //   }
+      // }
     })
 
     // setup sprite animations
@@ -381,8 +369,6 @@ export default class Arena extends Phaser.Scene {
   }
 
   update() {
-
-
     // Loop through player inputs
     this.players.forEach((player, i) => {
       let { fighter, buttons, direction } = player
@@ -435,8 +421,6 @@ export default class Arena extends Phaser.Scene {
         // if (fighter.state !== Stances.DASH) fighter.setFlipX(LEFT > 0)
         console.log('right')
         fighter.anims.play('right', 24, false)
-      } else if (buttons.B0) {
-        fighter.anims.play('hop')
       } else {
         let anim = fighter.anims.getName()
         switch (anim) {
