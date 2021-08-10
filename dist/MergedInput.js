@@ -821,14 +821,14 @@ var MergedInput = function (_Phaser$Plugins$Scene) {
 						this.addPlayer();
 					}
 
+					var deadzoneRadius = 0.1;
+
 					// Directions
-					if (thisGamepad.leftStick.y < -0.5) {
+					if (thisGamepad.leftStick.y < -deadzoneRadius) {
 						this.players[thisGamepad.index].direction.UP = Math.abs(thisGamepad.leftStick.y);
-						this.players[thisGamepad.index].direction.AIM = Math.abs(thisGamepad.leftStick);
 						this.players[thisGamepad.index].direction.TIMESTAMP = this.scene.sys.time.now;
-					} else if (thisGamepad.leftStick.y > 0.5) {
+					} else if (thisGamepad.leftStick.y > deadzoneRadius) {
 						this.players[thisGamepad.index].direction.DOWN = thisGamepad.leftStick.y;
-						this.players[thisGamepad.index].direction.AIM = thisGamepad.leftStick;
 						this.players[thisGamepad.index].direction.TIMESTAMP = this.scene.sys.time.now;
 					} else if (this.players[thisGamepad.index].interaction.device === 'gamepad') {
 						// DPad
@@ -836,13 +836,11 @@ var MergedInput = function (_Phaser$Plugins$Scene) {
 						this.players[thisGamepad.index].direction.DOWN = thisGamepad.down ? 1 : 0;
 					}
 
-					if (thisGamepad.leftStick.x < -0.5) {
+					if (thisGamepad.leftStick.x < -deadzoneRadius) {
 						this.players[thisGamepad.index].direction.LEFT = Math.abs(thisGamepad.leftStick.x);
-						this.players[thisGamepad.index].direction.AIM = Math.abs(thisGamepad.leftStick);
 						this.players[thisGamepad.index].direction.TIMESTAMP = this.scene.sys.time.now;
-					} else if (thisGamepad.leftStick.x > 0.5) {
+					} else if (thisGamepad.leftStick.x > deadzoneRadius) {
 						this.players[thisGamepad.index].direction.RIGHT = thisGamepad.leftStick.x;
-						this.players[thisGamepad.index].direction.AIM = thisGamepad.leftStick;
 						this.players[thisGamepad.index].direction.TIMESTAMP = this.scene.sys.time.now;
 					} else if (this.players[thisGamepad.index].interaction.device === 'gamepad') {
 						// DPad
@@ -851,26 +849,22 @@ var MergedInput = function (_Phaser$Plugins$Scene) {
 					}
 
 					// Secondary
-					if (thisGamepad.rightStick.y < -0.5) {
+					if (thisGamepad.rightStick.y < -deadzoneRadius) {
 						this.players[thisGamepad.index].direction_secondary.UP = Math.abs(thisGamepad.rightStick.y);
-						this.players[thisGamepad.index].direction_secondary.AIM = Math.abs(thisGamepad.rightStick);
 						this.players[thisGamepad.index].direction_secondary.TIMESTAMP = this.scene.sys.time.now;
-					} else if (thisGamepad.rightStick.y > 0.5) {
+					} else if (thisGamepad.rightStick.y > deadzoneRadius) {
 						this.players[thisGamepad.index].direction_secondary.DOWN = thisGamepad.rightStick.y;
-						this.players[thisGamepad.index].direction_secondary.AIM = thisGamepad.rightStick;
 						this.players[thisGamepad.index].direction_secondary.TIMESTAMP = this.scene.sys.time.now;
 					} else {
 						this.players[thisGamepad.index].direction_secondary.UP = 0;
 						this.players[thisGamepad.index].direction_secondary.DOWN = 0;
 					}
 
-					if (thisGamepad.rightStick.x < -0.5) {
+					if (thisGamepad.rightStick.x < -deadzoneRadius) {
 						this.players[thisGamepad.index].direction_secondary.LEFT = Math.abs(thisGamepad.rightStick.x);
-						this.players[thisGamepad.index].direction_secondary.AIM = Math.abs(thisGamepad.rightStick);
 						this.players[thisGamepad.index].direction_secondary.TIMESTAMP = this.scene.sys.time.now;
-					} else if (thisGamepad.rightStick.x > 0.5) {
+					} else if (thisGamepad.rightStick.x > deadzoneRadius) {
 						this.players[thisGamepad.index].direction_secondary.RIGHT = thisGamepad.rightStick.x;
-						this.players[thisGamepad.index].direction_secondary.AIM = thisGamepad.rightStick;
 						this.players[thisGamepad.index].direction_secondary.TIMESTAMP = this.scene.sys.time.now;
 					} else {
 						this.players[thisGamepad.index].direction_secondary.LEFT = 0;
@@ -883,7 +877,6 @@ var MergedInput = function (_Phaser$Plugins$Scene) {
 						for (var b = 0; b < thisGamepad.buttons.length; b++) {
 							var button = thisGamepad.buttons[b];
 							this.players[thisGamepad.index].buttons['B' + b] = button.value;
-              // this.players[thisGamepad.index].direction.AIM = thisGamepad.leftStick
 						}
 					}
 				}
