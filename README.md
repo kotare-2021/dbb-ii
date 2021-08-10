@@ -6,8 +6,10 @@ Experience up to 4 player local multiplayer action, with gamepad (xbox & playsta
 # Play the game here: http://beanbrawl.herokuapp.com/
 
 # Rules:
-Ball >>> Block
-Block >>> Dash
-Dash >>> Ball
-Everything >>> Idle / Jump
+Ball >>> Block<br/>
+Block >>> Dash<br/>
+Dash >>> Ball<br/>
+Everything >>> Idle / Jump<br/>
+
+Main code can be found on Dev branch.
 
